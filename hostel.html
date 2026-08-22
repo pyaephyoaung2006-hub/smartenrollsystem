@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Selection</title>
+    <link rel="stylesheet" href="hostel.css">
+</head>
+<body>
+
+<div class="hostel-box">
+
+    <h2>Hostel Selection</h2>
+
+    <label>Select Gender</label>
+
+    <select id="gender" onchange="showHostel()">
+        <option value="">-- Select Gender --</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+
+    <!-- Boy Hostel -->
+    <div id="boyHostel" class="hostel">
+        <h3>Boy Hostel</h3>
+        <label>
+            <input type="radio" name="hostel" value="Wunzin Hostel">
+            Wunzin Hostel
+        </label>
+    </div>
+
+    <!-- Girl Hostel -->
+    <div id="girlHostel" class="hostel">
+        <h3>Girl Hostel</h3>
+        <label>
+            <input type="radio" name="hostel" value="Khayae Hostel">
+            Khayae Hostel
+        </label>
+
+        <label>
+            <input type="radio" name="hostel" value="Gant Gaw Hostel">
+            Gant Gaw Hostel
+        </label>
+    </div>
+
+    <button onclick="nextPage()">Next</button>
+
+</div>
+
+<script src="hostel.js"></script>
+
+</body>
+</html>

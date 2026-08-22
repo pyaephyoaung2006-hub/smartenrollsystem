@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Feedbacks & Complaints Center</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            padding: 30px;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            color: #1e02a7;
+        }
+
+        .btn-back {
+            background-color: #7f8c8d;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .btn-back:hover { background-color: #6c7a7d; }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-stat {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #8e44ad;
+        }
+
+        .card-stat p { font-size: 12px; color: #7f8c8d; font-weight: bold; }
+        .card-stat h2 { font-size: 24px; margin-top: 5px; }
+
+        /* Filter Controls */
+        .filter-box {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .filter-box select, .filter-box input {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .filter-box input { flex: 1; min-width: 200px; }
+
+        /* Feedback Cards List */
+        .feedback-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feedback-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 5px solid #ccc;
+            position: relative;
+        }
+
+        .feedback-item.Suggestion { border-left-color: #2ecc71; }
+        .feedback-item.Complaint { border-left-color: #e74c3c; }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-suggestion { background-color: #d4efdf; color: #196f3d; }
+        .badge-complaint { background-color: #fadbd8; color: #943126; }
+
+        .student-info {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .message-box {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #2c3e50;
+            white-space: pre-wrap;
+        }
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            float: right;
+            margin-top: 10px;
+        }
+
+        .btn-delete:hover { background-color: #c0392b; }
+
+        .no-data {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            color: #95a5a6;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div>
+            <h1> Feedback & Complaint Inbox</h1>
+            <p style="font-size: 13px; color: #30696d; margin-top: 3px;">Submitted Suggestions & Complaints</p>
+        </div>
+        <a href="admin_dashboard.html" class="btn-back">Back To Dashboard</a>
+    </div>
+
+    <div class="summary-grid">
+        <div class="card-stat" style="border-color: #8e44ad;">
+            <p>TOTAL RECEIVED</p>
+            <h2 id="statTotal">0</h2>
+        </div>
+        <div class="card-stat" style="border-color: #2ecc71;">
+            <p>SUGGESTIONS </p>
+            <h2 id="statSuggestions">0</h2>
+        </div>
+        <div class="card-stat" style="border-color: #e74c3c;">
+            <p>COMPLAINTS </p>
+            <h2 id="statComplaints">0</h2>
+        </div>
+    </div>
+
+    <!-- Filter & Search Controls -->
+    <div class="filter-box">
+        <label><b>Filter:</b></label>
+        <select id="filterType" onchange="filterFeedbacks()">
+            <option value="All">All Types </option>
+            <option value="Suggestion"> Suggestions </option>
+            <option value="Complaint"> Complaints </option>
+        </select>
+
+        <input type="text" id="searchInput" onkeyup="filterFeedbacks()" placeholder="🔎 Search by Name, ID or Message...">
+    </div>
+
+    <!-- Feedbacks List -->
+    <div id="feedbackContainer" class="feedback-list">
+    </div>
+
+</div>
+
+<script>
+    let allFeedbacks = [];
+
+    function loadFeedbacks() {
+        allFeedbacks = JSON.parse(localStorage.getItem('userFeedbacks')) || [];
+
+        document.getElementById('statTotal').innerText = allFeedbacks.length;
+        document.getElementById('statSuggestions').innerText = allFeedbacks.filter(f => f.type === 'Suggestion').length;
+        document.getElementById('statComplaints').innerText = allFeedbacks.filter(f => f.type === 'Complaint').length;
+
+        // Display
+        filterFeedbacks();
+    }
+
+    function filterFeedbacks() {
+        const selectedType = document.getElementById('filterType').value;
+        const searchText = document.getElementById('searchInput').value.toLowerCase();
+        const container = document.getElementById('feedbackContainer');
+
+        container.innerHTML = '';
+
+        const filteredList = allFeedbacks.filter(item => {
+            const matchesType = (selectedType === 'All') || (item.type === selectedType);
+            const matchesSearch = 
+                (item.studentName && item.studentName.toLowerCase().includes(searchText)) ||
+                (item.studentId && item.studentId.toLowerCase().includes(searchText)) ||
+                (item.message && item.message.toLowerCase().includes(searchText));
+
+            return matchesType && matchesSearch;
+        });
+
+        if (filteredList.length === 0) {
+            container.innerHTML = '<div class="no-data">No suggestions or complaints have been submitted yet.</div>';
+            return;
+        }
+        filteredList.forEach(item => {
+            const isSuggestion = item.type === 'Suggestion';
+            const badgeClass = isSuggestion ? 'badge-suggestion' : 'badge-complaint';
+            const typeLabel = isSuggestion ? ' Suggestion' : ' Complaint';
+
+            const card = document.createElement('div');
+            card.className =` feedback-item ${item.type}`;
+
+            card.innerHTML = `
+                <div class="item-header">
+                    <span class="badge ${badgeClass}">${typeLabel}</span>
+                    <span style="font-size: 12px; color: #95a5a6;">📅 ${item.date || 'N/A'}</span>
+                </div>
+                <div class="student-info">
+                    <strong>From:</strong> ${item.studentName} (ID: ${item.studentId || 'N/A'}) | 
+                    <strong>Email:</strong> ${item.email || 'N/A'}
+                </div>
+                <div class="message-box">${item.message}</div>
+                <button class="btn-delete" onclick="deleteSingleFeedback(${item.id})">🗑️ Delete</button>
+-                <div style="clear: both;"></div>
+            `;
+
+            container.appendChild(card);
+        });
+    }
+
+    function deleteSingleFeedback(id) {
+        if (confirm("Are you sure you want to delete this feedbacks/complaints?")) {
+            allFeedbacks = allFeedbacks.filter(item => item.id !== id);
+            localStorage.setItem('userFeedbacks', JSON.stringify(allFeedbacks));
+            loadFeedbacks(); 
+        }
+    }
+
+    window.onload = loadFeedbacks;
+</script>
+
+</body>
+</html>

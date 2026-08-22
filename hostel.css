@@ -1,0 +1,43 @@
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#e8f0fe;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.hostel-box{
+    width:400px;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px gray;
+}
+
+select{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+}
+
+.hostel{
+    display:none;   /* အစမှာဖျောက်ထား */
+    margin-top:20px;
+}
+
+label{
+    display:block;
+    margin:10px 0;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:10px;
+    background:#0d6efd;
+    color:white;
+    border:none;
+    border-radius:5px;
+}

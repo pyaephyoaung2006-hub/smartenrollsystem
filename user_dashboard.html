@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 1px solid #34495e;
+            padding-bottom: 15px;
+            color: #1705d8;
+        }
+
+        .user-info {
+            background-color: #34495e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .user-info p {
+            font-size: 13px;
+            color: #bdc3c7;
+            margin-bottom: 5px;
+        }
+
+        .user-info h4 {
+            color: #ffffff;
+            font-size: 15px;
+            word-break: break-all;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-logout:hover {
+            background-color: #c0392b;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+
+        .badge {
+            background-color: #27ae60;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Cards Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #27ae60;
+            padding-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .course-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .course-item:last-child {
+            border-bottom: none;
+        }
+
+        .btn-enroll {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .btn-enroll:hover {
+            background-color: #2980b9;
+        }
+
+        .enrolled-list {
+            list-style-type: none;
+        }
+
+        .enrolled-list li {
+            background-color: #e8f8f5;
+            color: #16a085;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .btn-remove {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn-remove:hover {
+    background-color: #c0392b;
+}
+.action-bar {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end; 
+
+}
+.action-bar {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-register {
+    display: flex;
+    text-align: center;
+    background-color: #2506d4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s;
+}
+
+.btn-register:hover {
+    background-color: #0ac2f0;
+}
+
+.btn-register:hover {
+    background-color: #0ac2f0;
+}
+.hostel-card {
+    margin-top: 25px;
+    background: #ffffff;
+    border-left: 5px solid #f39c12; 
+}
+
+.hostel-desc {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.btn-hostel {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-hostel:hover {
+    background-color: #d68910;
+}
+.feedback-card {
+    margin-top: 25px;
+    background: #ffffff;
+    border-left: 5px solid #4207f1;
+}
+
+.form-group-dash {
+    margin-bottom: 15px;
+}
+
+.form-group-dash label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: #34495e;
+    margin-bottom: 5px;
+}
+
+.form-group-dash select,
+.form-group-dash textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.form-group-dash textarea {
+    resize: vertical;
+}
+
+.btn-feedback {
+    background-color: #220dc3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-feedback:hover {
+    background-color: #62e10d;
+}
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div>
+            <h2> Student Enroll System</h2>
+            <div class="user-info">
+                <p>Logged in as:</p>
+                <h4 id="sideName">Loading...</h4>
+                <p style="margin-top: 10px;">Student ID:</p>
+                <h4 id="sideId" style="color: #039640;">-</h4>
+            </div>
+        </div>
+        
+        <button class="btn-logout" onclick="logout()">Sign Out / Logout</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1>Welcome Back, <span id="welcomeName">Student</span>! </h1>
+                <p style="color: #7f8c8d; font-size: 14px; margin-top: 5px;">Email: <span id="welcomeEmail">-</span></p>
+                <p style="color:#e80839;font-size:18px;"><strong>"Please register first."</strong></p>
+            </div>
+            <span class="badge">Active</span>
+        </div>
+  
+        <div class="grid-container">
+            <div class="card">
+                <h3 style="font-size:24px;color:Grey;">Major Rating</h3>
+                <div class="course-item">
+                    <span>Civil Engineering</span>
+                    <button class="btn-enroll" onclick="enrollCourse('Civil Engineering')">Choose</button>
+                </div>
+                <div class="course-item">
+                    <span>Electrical Power Engineering</span>
+                    <button class="btn-enroll" onclick="enrollCourse('Electrical Power Engineering')">Choose</button>
+                </div>
+                <div class="course-item">
+                    <span>Electronic Engineering</span>
+                    <button class="btn-enroll" onclick="enrollCourse('Electronic Engineering')">Choose</button>
+                </div>
+                <div class="course-item">
+                    <span>Mechanical Engineering</span>
+                    <button class="btn-enroll" onclick="enrollCourse('Mechanical Engineering')">Choose</button>
+                </div>
+                <div class="course-item">
+                    <span>Computer Engineering and Information Technology</span>
+                    <button class="btn-enroll" onclick="enrollCourse('Computer Engineering and Information Technology')">Choose</button>
+                </div>
+            </div>
+
+            <!-- My Enrolled Courses Section -->
+            <div class="card">
+                <h3 style="color:#2980b9">Major Preference</h3>
+                <ul class="enrolled-list" id="enrolledCoursesList">
+                    <li style="background-color: #f8f9fa; color: #7f8c8d; font-weight: normal;">No courses enrolled yet.</li>
+                </ul>
+            </div>
+        </div>
+<div class="card hostel-card">
+    <h3>🏢 Student Hostel Service</h3>
+    <p class="hostel-desc">
+        If you want to apply for student hostel accommodation ,please click the Button below.</p>
+    <button class="btn-hostel" onclick="goToHostel()"> Apply for Hostel</button>
+</div>
+<div class="action-bar">
+    <button class="btn-register" onclick="goToRegister()">
+        REGISTER
+    </button>
+</div>
+
+    
+<div class="card feedback-card">
+    <h3> Feedback & Complaints </h3>
+    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+        
+        <div class="form-group-dash">
+            <label>(Choose Type):</label>
+            <select id="feedbackType" required>
+                <option value="Suggestion">  (Suggestion)</option>
+                <option value="Complaint">  (Complaint)</option>
+            </select>
+        </div>
+
+        <div class="form-group-dash">
+            <label>Write the Subject:</label>
+            <textarea id="feedbackMessage" rows="3" placeholder="Please write your suggestions or complaints here..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-feedback">Send </button>
+    </form>
+</div>
+
+    <script>
+        let currentUser = null;
+
+        window.onload = function() {
+            currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (!currentUser) {
+                alert(" Please, Login first!");
+                window.location.href = "login.html";
+                return;
+            }
+
+            document.getElementById('sideName').innerText = currentUser.name||  currentUser.username  ||"Student";
+            document.getElementById('sideId').innerText = currentUser.id || "N/A";
+            document.getElementById('welcomeName').innerText = currentUser.name || currentUser.username || "Student";
+            document.getElementById('welcomeEmail').innerText = currentUser.email || "N/A";
+
+            displayEnrolledCourses();
+        };
+
+        function enrollCourse(courseName) {
+            if (!currentUser.enrolledCourses) {
+                currentUser.enrolledCourses = [];
+            }
+
+            if (currentUser.enrolledCourses.includes(courseName)) {
+                alert(`⚠️ '${courseName}' You have already chosen this major.`);
+                return;
+            }
+
+            currentUser.enrolledCourses.push(courseName);
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+            let students = JSON.parse(localStorage.getItem('students')) || [];
+            let studentIndex = students.findIndex(s => s.email === currentUser.email || s.id === currentUser.id);
+            if (studentIndex !== -1) {
+                students[studentIndex].enrolledCourses = currentUser.enrolledCourses;
+                localStorage.setItem('students', JSON.stringify(students));
+            }
+
+            displayEnrolledCourses();
+        }
+
+       function displayEnrolledCourses() {
+    const listElement = document.getElementById('enrolledCoursesList');
+    listElement.innerHTML = '';
+
+    if (currentUser.enrolledCourses && currentUser.enrolledCourses.length > 0) {
+        currentUser.enrolledCourses.forEach((course, index) => {
+            const li = document.createElement('li');
+            li.style.display = 'flex';
+            li.style.justifyContent = 'space-between';
+            li.style.alignItems = 'center';
+
+            let ordinalNumber = getOrdinal(index + 1);
+
+            li.innerHTML = `
+                <span><b>[${ordinalNumber} Choice :]</b> 📖 ${course}</span>
+                <button class="btn-remove" onclick="unenrollCourse('${course}')">Remove</button>
+            `;
+            listElement.appendChild(li);
+        });
+    } else {
+        listElement.innerHTML = '<li style="background-color: #f8f9fa; color: #7f8c8d; font-weight: normal;">No courses enrolled yet.</li>';
+    }
+}
+
+        function logout() {
+            if (confirm("Are you sure you want to log out?")) {
+                localStorage.removeItem('currentUser');
+                window.location.href = "login.html";
+            }
+        }
+function unenrollCourse(courseName) {
+    if (confirm(`'${courseName}' Please select your most preferred major!`)) {
+        
+        currentUser.enrolledCourses = currentUser.enrolledCourses.filter(course => course !== courseName);
+
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+        let studentIndex = students.findIndex(s => s.email === currentUser.email || s.id === currentUser.id);
+        if (studentIndex !== -1) {
+            students[studentIndex].enrolledCourses = currentUser.enrolledCourses;
+            localStorage.setItem('students', JSON.stringify(students));
+        }
+
+        displayEnrolledCourses();
+    }
+}
+function getOrdinal(n) {
+    let s = ["th", "st", "nd", "rd"];
+    let v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+function goToRegister() {
+    window.location.href = "registration.html"; 
+}
+function goToHostel() {
+    window.location.href = "hostel.html";
+}
+function submitFeedback(event) {
+    event.preventDefault();
+
+    const type = document.getElementById('feedbackType').value;
+    const message = document.getElementById('feedbackMessage').value.trim();
+
+    if (!message) {
+        alert("⚠️ Please enter the subject.");
+        return;
+    }
+
+    let feedbackList = JSON.parse(localStorage.getItem('userFeedbacks')) || [];
+
+    const newFeedback = {
+        id: Date.now(),
+        studentId: currentUser ? currentUser.id : "N/A",
+        studentName: currentUser ? (currentUser.name || currentUser.username) : "Anonymous",
+        email: currentUser ? currentUser.email : "N/A",
+        type: type,
+        message: message,
+        date: new Date().toLocaleString()
+    };
+
+    feedbackList.push(newFeedback);
+    localStorage.setItem('userFeedbacks', JSON.stringify(feedbackList));
+
+    let typeName = (type === 'Suggestion') ? 'Suggestion' : 'Complaint';
+    alert(`✅ Your ${typeName} has been sent successfully.`);
+
+    document.getElementById('feedbackMessage').value = '';
+}
+    </script>
+</body>
+</html>

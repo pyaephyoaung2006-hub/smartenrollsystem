@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment Successful</title>
+    <link rel="stylesheet" href="success.css">
+</head>
+<body>
+
+<div class="success-container">
+
+    <div class="success-box">
+
+        <div class="icon">
+            &#10004
+        </div>
+
+        <h1>Enrollment Successful!</h1>
+
+        <p>
+            Congratulations! Your enrollment has been completed successfully.
+            Your application has been submitted and is now under review.
+        </p>
+
+        <div class="summary">
+
+            <h2>Enrollment Summary</h2>
+
+            <p><strong>Student Name :</strong> <span id="studentName"></span></p>
+
+            <p><strong>Student ID :</strong> <span id="studentId"></span></p>
+
+            <p><strong>Hostel :</strong> <span id="hostel"></span></p>
+
+            <p><strong>Birth Date :</strong> <span id="dob"></span></p>
+
+        </div>
+
+        <div class="buttons">
+
+
+            <button id="btnHome">Back to Home</button>
+
+            <button id="btnLogout">Logout</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Logout Modal -->
+
+<div id="logoutModal" class="modal">
+
+    <div class="modal-content">
+
+        <h3>Confirm Logout</h3>
+
+        <p>Are you sure you want to logout?</p>
+
+        <button id="confirmLogout">Yes</button>
+
+        <button id="cancelLogout">No</button>
+
+    </div>
+
+</div>
+
+<script src="success.js"></script>
+
+</body>
+</html>

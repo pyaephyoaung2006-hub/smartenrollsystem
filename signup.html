@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Enrollment signup</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://tumeiktila.edu.mm/wp-content/uploads/2020/12/TUM-2048x1536.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-box {
+            /* Login Box အောက်က အောက်ခံပုံကို Blur လုပ်ပေးသည့် အဓိကနေရာ */
+            background-color: rgba(183, 171, 171, 0.4); /* မလင်းလွန်း/မမှောင်လွန်းစေရန် Semi-transparent အဖြူရောင်စပ်ထားခြင်း */
+            backdrop-filter: blur(10px);               /* အနောက်က background ပုံကို အဝါး (Blur) လုပ်ပေးသည့် property */
+            -webkit-backdrop-filter: blur(10px);       /* Safari browser များအတွက် support လုပ်ရန် */
+            
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(216, 190, 190, 0.3); /* ရုပ်ထွက်ပိုလှစေရန် ခပ်ပါးပါး အနားကွပ်လေး ထည့်ထားခြင်း */
+            width: 360px;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #2c3e50;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: #34495e;
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 10px;
+        }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 40px; }
+        .container { max-width: 500px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #02060a; text-align: center; margin-bottom: 25px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #34495e; font-weight: bold; }
+        input[type="text"], input[type="email"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .btn-submit { width: 100%; padding: 12px; background-color: #085ced; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .btn-submit:hover { background-color: #219150; }
+        .btn-link { display: block; text-align: center; margin-top: 15px; color: #2980b9; text-decoration: none; font-weight: bold; }
+        #password,#confirmPassword{
+            height:20px;
+            font-size:16px;
+            padding:10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sign Up</h1>
+    <form id="enrollForm">
+        <div class="form-group">
+            <label for="studentId">Student ID</label>
+            <input type="text" id="studentId" required placeholder="ID">
+        </div>
+        <div class="form-group">
+            <label for="studentName">Account Name</label>
+            <input type="text" id="studentName" required placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="studentEmail">Email</label>
+            <input type="email" id="studentEmail" required placeholder="Email">
+            
+        </div>
+        <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" required placeholder="Password">
+</div>
+
+<div class="form-group">
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" required placeholder="Confirm Password">
+</div>
+        <button type="submit" class="btn-submit">Sign up</button>
+    </form>
+    <a href="login.html" class="btn-link">Already have an account? Login Account</a>
+</div>
+
+<script>
+    document.getElementById('enrollForm').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+
+        const studentId = document.getElementById('studentId').value;
+        const name = document.getElementById('studentName').value;
+        const email = document.getElementById('studentEmail').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        if (password !== confirmPassword) {
+    alert("Password and Confirm Password do not match.");
+    return;
+}
+        const newStudent = {
+            id: studentId,
+            name: name,
+            email: email,
+            password:password,
+            date: new Date().toLocaleDateString()
+        };
+let students = JSON.parse(localStorage.getItem('students')) || [];
+
+
+        students.push(newStudent);
+
+        localStorage.setItem('students', JSON.stringify(students));
+      
+    localStorage.setItem('currentUser', JSON.stringify(newStudent));
+
+    window.location.href = "user_dashboard.html";
+        this.reset();
+    });
+</script>
+
+</body>
+</html>
