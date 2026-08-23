@@ -185,18 +185,9 @@
     margin-bottom: 20px;
     display: flex;
     justify-content: flex-end; 
-
-}
-.action-bar {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
 }
 
 .btn-register {
-    display: flex;
-    text-align: center;
     background-color: #2506d4;
     color: white;
     padding: 10px 20px;
@@ -207,10 +198,6 @@
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     transition: background-color 0.3s;
-}
-
-.btn-register:hover {
-    background-color: #0ac2f0;
 }
 
 .btn-register:hover {
@@ -320,7 +307,9 @@
             </div>
             <span class="badge">Active</span>
         </div>
-  
+  <div class="action-bar">
+    <button class="btn-register" onclick="goToRegister()"> REGISTER</button>
+</div>
         <div class="grid-container">
             <div class="card">
                 <h3 style="font-size:24px;color:Grey;">Major Rating</h3>
@@ -355,18 +344,12 @@
             </div>
         </div>
 <div class="card hostel-card">
-    <h3>🏢 Student Hostel Service</h3>
+    <h3> Student Hostel Service</h3>
     <p class="hostel-desc">
-        If you want to apply for student hostel accommodation ,please click the Button below.</p>
-    <button class="btn-hostel" onclick="goToHostel()"> Apply for Hostel</button>
+        Whether you are applying for a hostel or not, please check the student hostel service portal.</p>
+    <button class="btn-hostel" onclick="goToHostel()"> Check Hostel</button>
 </div>
-<div class="action-bar">
-    <button class="btn-register" onclick="goToRegister()">
-        REGISTER
-    </button>
-</div>
-
-    
+    </div>
 <div class="card feedback-card">
     <h3> Feedback & Complaints </h3>
     <form id="feedbackForm" onsubmit="submitFeedback(event)">
