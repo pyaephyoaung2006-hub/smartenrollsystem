@@ -70,9 +70,17 @@
             <span id="displayPhone">-</span>
         </div>
         <div class="info-item">
-            <label>Address</label>
-            <span id="displayAddress">-</span>
-        </div>
+    <label>Parent Name</label>
+    <span id="displayparentName">-</span>
+</div>
+<div class="info-item">
+    <label>Parent Phone</label>
+    <span id="displayPhone1">-</span>
+</div>
+<div class="info-item">
+    <label>Address</label>
+    <span id="displayAddress">-</span>
+</div>
         </div>
     </div>
 
@@ -128,17 +136,20 @@
                           localStorage.getItem('gender') || 
                           'Not Specified';
 
-        document.getElementById('displayId').innerText = student.id || selectedId;
-        document.getElementById('displayName').innerText = student.name || student.username || 'N/A';
-        document.getElementById('displayEmail').innerText = student.email || 'N/A';
-        document.getElementById('displayGender').innerText = genderValue; 
-        document.getElementById('displayBirthdate').innerText = student.birthdate ||currentUser.birthdate||  'N/A';
-document.getElementById('displayPhone').innerText = student.phone || currentUser.phone  ||'N/A';
-document.getElementById('displayAddress').innerText = student.address || currentUser.address || 'N/A';
-        const courseContainer = document.getElementById('displayCourses');
-        courseContainer.innerHTML = '';
+      document.getElementById('displayId').innerText = (student && student.id) || selectedId || 'N/A';
+document.getElementById('displayName').innerText = (student && (student.name || student.username)) || currentUser.name || 'N/A';
+document.getElementById('displayEmail').innerText = (student && student.email) || currentUser.email || 'N/A';
+document.getElementById('displayGender').innerText = genderValue; 
 
+document.getElementById('displayBirthdate').innerText = (student && student.birthdate) || currentUser.birthdate || localStorage.getItem('dob') || 'N/A';
+document.getElementById('displayPhone').innerText = (student && student.phone) || currentUser.phone || localStorage.getItem('phone') || 'N/A';
 
+document.getElementById('displayparentName').innerText = (student && student.parentName) || currentUser.parentName || localStorage.getItem('parentName') || 'N/A';
+document.getElementById('displayPhone1').innerText = (student && student.phone1) || currentUser.phone1 || localStorage.getItem('phone1') || 'N/A';
+document.getElementById('displayAddress').innerText = (student && student.address)  ||currentUser.address||  localStorage.getItem('address') || 'N/A';
+
+const courseContainer = document.getElementById('displayCourses');
+courseContainer.innerHTML = '';
 
         if (student.enrolledCourses && student.enrolledCourses.length > 0) {
             student.enrolledCourses.forEach((course, index) => {
