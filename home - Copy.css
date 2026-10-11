@@ -1,0 +1,219 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9; /* ပိုမိုရှင်းလင်းသော Light Background ပြောင်းထားပါသည် */
+}
+
+.profile {
+    width: 200px;
+    border-radius: 10px;
+    border: 2px solid blue;
+}
+
+/* ================= Navbar ================= */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+nav h2 {
+    color: #0d6efd;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: rgb(49, 6, 241);
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    padding-bottom: 5px;
+}
+
+nav ul li a:hover {
+    color: rgb(0, 153, 255);
+    border-bottom: 2px solid rgb(0, 187, 255);
+}
+
+/* ================= Buttons ================= */
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.login {
+    background: rgb(14, 105, 209);
+    border: 1px solid #0d6efd;
+}
+
+.login:hover {
+    background-color: rgb(32, 6, 234);
+    color: rgb(244, 245, 249);
+}
+
+.signup {
+    background-color: #6c757d;
+}
+
+.signup:hover {
+    background-color: #5a6268;
+}
+
+/* ================= Hero Section (Fix Background Overlap) ================= */
+.hero {
+    min-height: 80vh;
+
+    background-image:
+        linear-gradient(#00000099, rgba(0, 0, 0, 0.6)),
+        url("https://tumeiktila.edu.mm/wp-content/uploads/2020/12/TUM-2-2048x1536.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    color: white;
+
+    padding: 60px 40px;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+/* ================= Section Titles ================= */
+.title {
+    text-align: center;
+    margin: 40px 0 20px;
+    color: #333;
+}
+
+/* ================= Cards ================= */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+.card {
+    width: 250px;
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    color: #0d6efd;
+    margin-bottom: 10px;
+}
+
+.program img {
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+.program button {
+    background: #0d6efd;
+    color: white;
+    margin-top: 15px;
+}
+
+.program button:hover {
+    background-color: rgba(8, 3, 110, 0.97);
+    color: white;
+}
+
+/* ================= Statistics ================= */
+.stats {
+    margin-top: 50px;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    background: #0d6efd;
+    color: white;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+/* ================= Footer ================= */
+footer {
+    padding: 30px 20px;
+    text-align: center;
+    background: #075baf;
+    color: white;
+    line-height: 1.6;
+}
+
+footer a {
+    color: #00bfff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

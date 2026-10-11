@@ -21,24 +21,24 @@ body{
 }
 
 .success-box{
-    width:500px;
+    width:700px;
     background:#fff;
     padding:30px;
-    border-radius:15px;
+    border-radius:10px;
     box-shadow:0 5px 20px rgba(0,0,0,0.2);
     text-align:center;
 }
 
 .icon{
-    width:100px;
-    height:100px;
+    width:70px;
+    height:70px;
     background:#d4edda;
     color:#28a745;
     border-radius:50%;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:50px;
+    font-size:30px;
     margin:0 auto 20px;
 }
 

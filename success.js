@@ -22,7 +22,7 @@ document.getElementById("confirmLogout").addEventListener("click", function () {
     window.location.href = "login.html";
 });
 
-
+document.getElementById("studentId").textContent = localStorage.getItem("studentId");
 document.getElementById("studentName").textContent =
     localStorage.getItem("studentName");
 
