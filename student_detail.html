@@ -109,67 +109,109 @@
 
 <script>
     function getOrdinal(n) {
-        let s = ["th", "st", "nd", "rd"];
-        let v = n % 100;
-        return n + (s[(v - 20) % 10] || s[v]||  s[0]);
+        const suffixes = ["th", "st", "nd", "rd"];
+        const value = n % 100;
+        return n + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
     }
 
     function loadStudentDetail() {
-        const selectedId = localStorage.getItem('selectedStudentId');
-        const students = JSON.parse(localStorage.getItem('students')) || [];
-        const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+        const selectedId = (localStorage.getItem("selectedStudentId") || "").trim();
+        const students = JSON.parse(localStorage.getItem("students") || "[]");
+        const currentUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
 
-        const student = students.find(s => 
-            s.id === selectedId || 
-            ('STU-' + (students.indexOf(s) + 1)) === selectedId ||
-            s.email === selectedId
-        );
 
-        if (!student) {
+        const studentIndex = students.findIndex((s, index) => {
+            const storedId = String(s.id || "").trim();
+            const email = String(s.email || "").trim().toLowerCase();
+            const selected = selectedId.toLowerCase();
+
+            return (
+                (storedId && storedId.toLowerCase() === selected) ||
+                (email && email === selected) ||
+                `mtlstu-${index + 1}` === selected ||
+                `stu-${index + 1}` === selected
+            );
+        });
+
+        if (studentIndex === -1) {
             alert("⚠️ Information for this student cannot be found!");
             window.location.href = "admin_dashboard.html";
             return;
         }
 
-        let genderValue = student.gender || 
-                          (currentUser.email === student.email ? currentUser.gender : null) || 
-                          localStorage.getItem('gender') || 
-                          'Not Specified';
+        const student = students[studentIndex];
+        const generatedId = `Mtl-${studentIndex + 1}`;
+        const isCurrentUser =
+            currentUser.email &&
+            student.email &&
+            currentUser.email.toLowerCase() === student.email.toLowerCase();
 
-      document.getElementById('displayId').innerText = (student && student.id) || selectedId || 'N/A';
-document.getElementById('displayName').innerText = (student && (student.name || student.username)) || currentUser.name || 'N/A';
-document.getElementById('displayEmail').innerText = (student && student.email) || currentUser.email || 'N/A';
-document.getElementById('displayGender').innerText = genderValue; 
+        const getValue = (...values) =>
+            values.find(value => value !== undefined && value !== null && String(value).trim() !== "") || "N/A";
 
-document.getElementById('displayBirthdate').innerText = (student && student.birthdate) || currentUser.birthdate || localStorage.getItem('dob') || 'N/A';
-document.getElementById('displayPhone').innerText = (student && student.phone) || currentUser.phone || localStorage.getItem('phone') || 'N/A';
+        document.getElementById("displayId").innerText =
+            getValue(student.id, selectedId, generatedId);
 
-document.getElementById('displayparentName').innerText = (student && student.parentName) || currentUser.parentName || localStorage.getItem('parentName') || 'N/A';
-document.getElementById('displayPhone1').innerText = (student && student.phone1) || currentUser.phone1 || localStorage.getItem('phone1') || 'N/A';
-document.getElementById('displayAddress').innerText = (student && student.address)  ||currentUser.address||  localStorage.getItem('address') || 'N/A';
+        document.getElementById("displayName").innerText =
+            getValue(student.name, student.username, isCurrentUser && currentUser.name);
 
-const courseContainer = document.getElementById('displayCourses');
-courseContainer.innerHTML = '';
+        document.getElementById("displayEmail").innerText =
+            getValue(student.email, isCurrentUser && currentUser.email);
 
-        if (student.enrolledCourses && student.enrolledCourses.length > 0) {
+        document.getElementById("displayGender").innerText =
+            getValue(student.gender, isCurrentUser && currentUser.gender, "Not Specified");
+
+        document.getElementById("displayBirthdate").innerText =
+            getValue(student.birthdate, student.dob, isCurrentUser && currentUser.birthdate);
+
+        document.getElementById("displayPhone").innerText =
+            getValue(student.phone, isCurrentUser && currentUser.phone);
+
+        document.getElementById("displayparentName").innerText =
+            getValue(
+                student.parentName,
+                student.parentname,
+                isCurrentUser && currentUser.parentName,
+                isCurrentUser && currentUser.parentname
+            );
+
+        document.getElementById("displayPhone1").innerText =
+            getValue(
+                student.parentPhone,
+                student.phone1,
+                isCurrentUser && currentUser.parentPhone,
+                isCurrentUser && currentUser.phone1
+            );
+
+        document.getElementById("displayAddress").innerText =
+            getValue(student.address, isCurrentUser && currentUser.address);
+
+        const courseContainer = document.getElementById("displayCourses");
+        courseContainer.innerHTML = "";
+
+        if (Array.isArray(student.enrolledCourses) && student.enrolledCourses.length > 0) {
             student.enrolledCourses.forEach((course, index) => {
-                const li = document.createElement('li');
-                li.innerHTML =` <b>[${getOrdinal(index + 1)} Choice] :</b> 📖 ${course}`;
+                const li = document.createElement("li");
+                li.innerHTML = `<b>[${getOrdinal(index + 1)} Choice] :</b> 📖 ${course}`;
                 courseContainer.appendChild(li);
             });
         } else {
-            courseContainer.innerHTML = '<li style="border-left-color: #e74c3c; color: #7f8c8d;">No majors or courses selected yet.</li>';
+            courseContainer.innerHTML =
+                '<li style="border-left-color: #e74c3c; color: #7f8c8d;">No majors or courses selected yet.</li>';
         }
 
-        let hostelStatus = student.hostelApplied || currentUser.hostelApplied;
-        let hostelName = student.hostel || currentUser.hostel || localStorage.getItem('hostel');
+        const hostelStatus = student.hostelApplied || (isCurrentUser && currentUser.hostelApplied);
+        const hostelName = student.hostel || (isCurrentUser && currentUser.hostel);
 
         if (hostelStatus) {
-            document.getElementById('displayHostelStatus').innerHTML = '<span class="badge badge-success">APPLIED</span>';
-            document.getElementById('displayHostelName').innerText = hostelName || 'Hostel Assigned';
+            document.getElementById("displayHostelStatus").innerHTML =
+                '<span class="badge badge-success">APPLIED</span>';
+            document.getElementById("displayHostelName").innerText =
+                hostelName || "Hostel Assigned";
         } else {
-            document.getElementById('displayHostelStatus').innerHTML = '<span class="badge badge-danger">NOT APPLIED</span>';
-            document.getElementById('displayHostelName').innerText = 'N/A'; 
+            document.getElementById("displayHostelStatus").innerHTML =
+                '<span class="badge badge-danger">NOT APPLIED</span>';
+            document.getElementById("displayHostelName").innerText = "N/A";
         }
     }
 
